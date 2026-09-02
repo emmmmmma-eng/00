@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全屋插座位置清單 - 實建家室內設計</title>
+  <style>
+    :root {
+      --primary: #1e3a5f;
+      --primary-dark: #0f233d;
+      --accent: #e65100;
+      --accent-light: #fff3e0;
+      --warning-bg: #fff8e1;
+      --warning-border: #ffb74d;
+      --warning-text: #b78103;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #334155;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #ffffff;
+      padding: 40px 32px;
+      position: relative;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    header .subtitle {
+      font-size: 1.25rem;
+      color: #cbd5e1;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    header .lead {
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.7;
+      border-left: 3px solid #ff9800;
+      padding-left: 14px;
+    }
+    .author-tag {
+      margin-top: 18px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    /* Main Content */
+    main {
+      padding: 36px 32px;
+    }
+
+    h2.section-title {
+      font-size: 1.45rem;
+      color: var(--primary);
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2.section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    /* Core Principle Banner */
+    .principle-box {
+      background: #f1f5f9;
+      border-left: 5px solid var(--primary);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 30px;
+    }
+    .principle-box h3 {
+      font-size: 1.15rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+    .principle-box p {
+      margin-bottom: 10px;
+      font-size: 0.98rem;
+    }
+    .principle-box p:last-child {
+      margin-bottom: 0;
+    }
+    .highlight-tip {
+      background: var(--accent-light);
+      border: 1px dashed var(--accent);
+      color: #bf360c;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-top: 12px;
+    }
+
+    /* 6 Danger Locations Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .spot-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: #fff;
+    }
+    .spot-header {
+      background: #f8fafc;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .spot-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .spot-num {
+      background: var(--primary);
+      color: white;
+      font-size: 0.85rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    .spot-height-badge {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-family: monospace;
+    }
+    .spot-body {
+      padding: 20px;
+    }
+    .spot-meta {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .meta-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.96rem;
+    }
+    .meta-label {
+      min-width: 80px;
+      font-weight: 700;
+      color: var(--text-dark);
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+    .meta-val {
+      flex: 1;
+      color: #475569;
+    }
+
+    .trap-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.92rem;
+      color: #92400e;
+    }
+    .trap-box strong {
+      color: #b45309;
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    th {
+      background: #f1f5f9;
+      color: var(--text-dark);
+      padding: 14px 18px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:nth-child(even) td {
+      background-color: #fafbfc;
+    }
+    .td-height {
+      font-family: monospace;
+      font-weight: 700;
+      color: #0284c7;
+      white-space: nowrap;
+    }
+
+    /* Special Circuits */
+    .circuits-section {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 36px;
+    }
+    .circuits-section h3 {
+      font-size: 1.15rem;
+      color: #b91c1c;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .circuits-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .circuit-tag {
+      background: #ffffff;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    /* 5 Questions Checklist */
+    .qa-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .qa-item {
+      display: flex;
+      gap: 16px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .qa-num {
+      background: #e2e8f0;
+      color: var(--primary);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .qa-content h4 {
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+    .qa-content p {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer / CTA */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 36px 32px;
+      border-top: 1px solid var(--border);
+    }
+    .cta-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 24px;
+      border-radius: var(--radius);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .cta-card h3 {
+      color: #f8fafc;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .cta-card p {
+      color: #94a3b8;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+    }
+    .btn-line {
+      display: inline-block;
+      background: #06c755;
+      color: #fff;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.2s ease;
+    }
+    .btn-line:hover {
+      background: #05b04c;
+    }
+    .legal-notice {
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.6;
+      border-top: 1px solid #334155;
+      padding-top: 20px;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 10px 8px; }
+      header { padding: 28px 20px; }
+      header h1 { font-size: 1.65rem; }
+      main { padding: 24px 16px; }
+      .spot-header { flex-direction: column; align-items: flex-start; }
+      .meta-row { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header>
+    <div class="header-badge">水電放樣必讀指南</div>
+    <h1>水電放樣・全屋插座位置清單</h1>
+    <div class="subtitle">那個插座到底，是誰裝在這裡的？</div>
+    <div class="lead">
+      插座裝錯不會馬上發現，是入住三個月後、你第八次把延長線從沙發底下拉出來時才發現。
+      掌握六個最常留錯的位置，高度和水平位置一次抓對。
+    </div>
+    <div class="author-tag">
+      台中裝潢夫妻快手哥 ｜ 實建家室內設計 × 住宅空間規劃
+    </div>
+  </header>
+
+  <main>
+    <!-- 先講原則 -->
+    <section>
+      <h2 class="section-title">先講原則：為什麼會裝錯？</h2>
+      <div class="principle-box">
+        <h3>插座不是照牆面平均分配，是照「家具」和「人的動作」放</h3>
+        <p>建商交屋的原始配置，是在「還沒有家具」的空屋裡放的。所以幾乎每一戶都會出現同一種狀況：插座還在，但被櫃子、床、沙發擋死了。</p>
+        <p><strong>水電放樣</strong>（在牆上畫出開孔位置）那一天，是全案<strong>唯一一次能免費改動的機會</strong>。過了這關，牆一封、磚一貼，之後要移一個插座就是打牆、補土、重新油漆，一個點動輒好幾千。</p>
+        <div class="highlight-tip">
+          📌 <strong>放樣前一定要備齊的兩張表：</strong><br>
+          1. <strong>家具尺寸表</strong>（床、沙發、櫃體的長寬高）<br>
+          2. <strong>各空間家電清單</strong><br>
+          沒有這兩張，水電師傅只能照經驗抓，抓完往往就是「誰裝在這裡的」悲劇。
+        </div>
+        <p style="margin-top: 12px; font-size: 0.92rem; color: #475569;">
+          * 備註：以下所有高度均由<strong>「地板完成面」</strong>（貼完磚、鋪完地板後）算到插座盒中心。若放樣時地板尚未施作，請務必與師傅確認是否扣除地板厚度（磁磚/超耐磨常見 2~3 cm 誤差）。
+        </p>
+      </div>
+    </section>
+
+    <!-- 六個高危位置 -->
+    <section>
+      <h2 class="section-title">六個高危位置・逐一放樣</h2>
+      <div class="cards-grid">
+
+        <!-- 01 床頭 -->
+        <article class="spot-card">
+          <div class="spot-header">
+            <div class="spot-title"><span class="spot-num">01</span> 床頭</div>
+            <span class="spot-height-badge">H 60 - 70 cm</span>
+          </div>
+          <div class="spot-body">
+            <div class="spot-meta">
+              <div class="meta-row">
+                <span class="meta-label">高度</span>
+                <span class="meta-val">離地 60-70 cm，約床頭櫃檯面再往上 10-15 cm。低於床頭櫃檯面就等於沒有。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">水平位置</span>
+                <span class="meta-val">左右各一組，中心對齊床頭櫃中間。務必先確認床頭板厚度（常見 8-15 cm），插座需落在床頭板外側，否則會被整個蓋住。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">建議規格</span>
+                <span class="meta-val">雙孔 ×2 + USB-C 快充孔，兩側對稱。建議額外加一組給床邊立燈或空氣清淨機。</span>
+              </div>
+            </div>
+            <div class="trap-box">
+              ⚠️ <strong>最常踩的雷：</strong>只算了床架高度，忘了算「床墊」。厚床墊（25-30 cm）加上加厚床包一鋪，原本剛好的插座直接沉到床墊側面下方，手完全伸不進去。放樣時直接問：<strong>床墊多高？</strong>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 電視牆 -->
+        <article class="spot-card">
+          <div class="spot-header">
+            <div class="spot-title"><span class="spot-num">02</span> 電視牆</div>
+            <span class="spot-height-badge">H 110 - 130 cm + 30 cm</span>
+          </div>
+          <div class="spot-body">
+            <div class="spot-meta">
+              <div class="meta-row">
+                <span class="meta-label">高度</span>
+                <span class="meta-val">壁掛電視：110-130 cm 一組，藏在電視機背板後。下方矮櫃：30 cm 一組，供機上盒、遊戲機、路由器使用。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">水平位置</span>
+                <span class="meta-val">上方插座需<strong>偏離電視正中心 15-20 cm</strong>，避開壁掛架正中支撐柱。下方插座建議移至櫃體側邊，插頭才不會頂到櫃背。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">別忘弱電</span>
+                <span class="meta-val">電源孔旁同高預留「網路孔 ×1」、「HDMI 預埋管 ×1」。預埋管線在此階段施作最經濟省事，之後無法補救。</span>
+              </div>
+            </div>
+            <div class="trap-box">
+              ⚠️ <strong>最常踩的雷：</strong>只留一組在 30 cm。壁掛電視後電線從機身一路垂到地面，再怎麼藏都很醜。想壁掛就務必在上端預留一組。
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 廚房檯面 -->
+        <article class="spot-card">
+          <div class="spot-header">
+            <div class="spot-title"><span class="spot-num">03</span> 廚房檯面</div>
+            <span class="spot-height-badge">H 110 - 120 cm</span>
+          </div>
+          <div class="spot-body">
+            <div class="spot-meta">
+              <div class="meta-row">
+                <span class="meta-label">高度</span>
+                <span class="meta-val">離地 110-120 cm，即檯面（85-90 cm）往上 20-30 cm。太低容易被物品遮擋或遭水花濺濕。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">數量抓法</span>
+                <span class="meta-val">檯面每 90 cm 工作段至少 2 組。實務上一字型廚房抓 4-6 組、L 型抓 6-8 組。廚房是全屋最容易插座不足之處，寧多勿少。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">安全距離</span>
+                <span class="meta-val">插座離爐火與水槽均須保持 <strong>60 cm 以上</strong>。電器櫃內獨立拉專用迴路，不可與檯面插座共用。</span>
+              </div>
+            </div>
+            <div class="trap-box">
+              ⚠️ <strong>最常踩的雷：</strong>只算了目前現有的電器。氣炸鍋、咖啡機、電子鍋、調理機多半是入住後添購，而且常同時運轉。數量請抓<strong>「現有電器數量 + 50%」</strong>。
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 化妝桌 -->
+        <article class="spot-card">
+          <div class="spot-header">
+            <div class="spot-title"><span class="spot-num">04</span> 化妝桌</div>
+            <span class="spot-height-badge">H 85 - 95 cm</span>
+          </div>
+          <div class="spot-body">
+            <div class="spot-meta">
+              <div class="meta-row">
+                <span class="meta-label">高度</span>
+                <span class="meta-val">離地 85-95 cm，桌面（75-80 cm）往上 10-15 cm。吹風機、離子夾拿起來就能插，不必彎腰探摸桌底。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">水平位置</span>
+                <span class="meta-val">設置在鏡子側邊，切勿放在鏡子正後方（鏡子貼牆直接封死）。以慣用手側為優先。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">建議規格</span>
+                <span class="meta-val">雙孔 ×2 起跳（吹風機 + 捲髮棒 + 補光燈常同時使用），另附 USB 充電孔。</span>
+              </div>
+            </div>
+            <div class="trap-box">
+              ⚠️ <strong>最常踩的雷：</strong>化妝桌常是最後才決定位置的家具，放樣時常被忽略「先不留」。家具進場才發現整面牆沒插座，只能拉明線橫跨房門。不確定位置也<strong>務必先留</strong>！
+            </div>
+          </div>
+        </article>
+
+        <!-- 05 書桌 -->
+        <article class="spot-card">
+          <div class="spot-header">
+            <div class="spot-title"><span class="spot-num">05</span> 書桌</div>
+            <span class="spot-height-badge">H 90 - 100 cm + 20 - 30 cm</span>
+          </div>
+          <div class="spot-body">
+            <div class="spot-meta">
+              <div class="meta-row">
+                <span class="meta-label">高度配置</span>
+                <span class="meta-val"><strong>桌上與桌下兩組都要：</strong><br>・桌面上 90-100 cm：筆電、檯燈、手機充電，隨插即拔。<br>・桌下 20-30 cm：電腦主機、螢幕、路由器等固定設備。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">水平位置</span>
+                <span class="meta-val">桌上插座移至側邊（避開螢幕正後方）；桌下插座靠近桌腳，便於整理收納線槽。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">別忘弱電</span>
+                <span class="meta-val">書房是全屋最需實體網路孔之處（視訊會議、電競、NAS 必備）。</span>
+              </div>
+            </div>
+            <div class="trap-box">
+              ⚠️ <strong>最常踩的雷：</strong>建商預設全留在 30 cm。每次充電都得鑽到桌下摸黑找孔。桌上插座是這六大位置中實用 CP 值最高的，務必爭取！
+            </div>
+          </div>
+        </article>
+
+        <!-- 06 玄關 -->
+        <article class="spot-card">
+          <div class="spot-header">
+            <div class="spot-title"><span class="spot-num">06</span> 玄關</div>
+            <span class="spot-height-badge">H 30 cm + 110 cm</span>
+          </div>
+          <div class="spot-body">
+            <div class="spot-meta">
+              <div class="meta-row">
+                <span class="meta-label">高度配置</span>
+                <span class="meta-val">・30 cm 一組：給掃地機器人基座（極易被遺忘）。<br>・110 cm 一組：給電子鎖變壓器、門口監視器、感應燈。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">水平位置</span>
+                <span class="meta-val">低位插座旁需保留 <strong>60 cm 以上淨空面</strong>，充電座前方需出入空間，若卡在鞋櫃夾縫會導致機器人無法回充返航。</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-label">順手追加</span>
+                <span class="meta-val">鞋櫃內部一組（烘鞋機、防潮除濕棒）；換鞋區一組（電動滑板車、行動電源）。</span>
+              </div>
+            </div>
+            <div class="trap-box">
+              ⚠️ <strong>最常踩的雷：</strong>玄關坪數小，規劃時極易漏掉。但玄關每天必經，一旦缺少低位插座，掃地機器人只能淪落擺在客廳中央當路障。
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 全屋速查表 -->
+    <section>
+      <h2 class="section-title">全屋速查一次抓完・其他空間高度表</h2>
+      <p style="margin-bottom: 14px; font-size: 0.95rem; color: var(--text-muted);">同樣由地板完成面量測至插座底盒中心。水電放樣當天可直接對照核對：</p>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%;">位置區域</th>
+              <th style="width: 24%;">建議高度</th>
+              <th style="width: 48%;">施作備註</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>一般牆面插座</strong></td>
+              <td class="td-height">30 cm</td>
+              <td>避開掃地機器人碰撞及日常拖地水濺高度</td>
+            </tr>
+            <tr>
+              <td><strong>沙發背牆</strong></td>
+              <td class="td-height">35 - 40 cm</td>
+              <td>略高於常規插座，避免被沙發靠背與椅墊擋住</td>
+            </tr>
+            <tr>
+              <td><strong>開關面板</strong></td>
+              <td class="td-height">120 - 135 cm</td>
+              <td>全屋務求高度水平一致，高低落差在視線上極明顯</td>
+            </tr>
+            <tr>
+              <td><strong>浴室面盆旁</strong></td>
+              <td class="td-height">110 - 120 cm</td>
+              <td>必備防濺防水蓋；迴路端必須配置漏電斷路器</td>
+            </tr>
+            <tr>
+              <td><strong>免治馬桶</strong></td>
+              <td class="td-height">30 - 40 cm</td>
+              <td>設於馬桶側邊牆面，避開進水角閥管路；建議獨立迴路</td>
+            </tr>
+            <tr>
+              <td><strong>直立式洗衣機</strong></td>
+              <td class="td-height">110 - 120 cm</td>
+              <td>高於洗衣機身，插拔與維修免搬動笨重機器</td>
+            </tr>
+            <tr>
+              <td><strong>滾筒式洗衣機</strong></td>
+              <td class="td-height">120 - 140 cm</td>
+              <td>滾筒機身或堆疊烘衣機高度較高，需配合往上抓</td>
+            </tr>
+            <tr>
+              <td><strong>冷氣空調</strong></td>
+              <td class="td-height">依室內機位置</td>
+              <td>隱藏在室內機後方或上緣，必須為專用迴路（220V/110V）</td>
+            </tr>
+            <tr>
+              <td><strong>陽台 / 戶外區域</strong></td>
+              <td class="td-height">110 cm 以上</td>
+              <td>加裝 IP44 以上防水防濺盒，遠離地面積水潮濕</td>
+            </tr>
+            <tr>
+              <td><strong>餐桌旁牆面</strong></td>
+              <td class="td-height">75 - 85 cm</td>
+              <td>冬日火鍋、電烤盤專用，貼齊桌面高度便利好插</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 配電與專用迴路 -->
+    <section>
+      <div class="circuits-section">
+        <h3>⚡ 配電提醒：別讓它們共用迴路！</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 12px;">
+          <strong>專用迴路</strong>意指由總配電箱單獨拉一組獨立無熔絲開關（NFB）給該設備。高功率電器若共用迴路，輕則跳電斷路，重則電線發熱甚至引發火災。此工法只能在水電開槽階段完成！
+        </p>
+        <div class="circuits-grid">
+          <span class="circuit-tag">冷氣（每台獨立）</span>
+          <span class="circuit-tag">電冰箱</span>
+          <span class="circuit-tag">洗碗機</span>
+          <span class="circuit-tag">烤箱 / 蒸烤爐</span>
+          <span class="circuit-tag">微波爐</span>
+          <span class="circuit-tag">IH爐 / 電陶爐</span>
+          <span class="circuit-tag">洗衣機 / 乾衣機</span>
+          <span class="circuit-tag">電熱水器</span>
+          <span class="circuit-tag">浴室暖風機</span>
+          <span class="circuit-tag">免治馬桶</span>
+          <span class="circuit-tag">氣炸鍋（建議）</span>
+          <span class="circuit-tag">電動車充電（另議）</span>
+        </div>
+        <div class="highlight-tip" style="background: #fff; border-color: #f59e0b; color: #78350f;">
+          💡 <strong>配電箱留空確認：</strong>翻修時常遇到管線全換卻沒換配電盤，完工後盤面塞滿無多餘迴路空間，未來想增裝電器或冷氣都無法施作。放樣時請務必確認總盤內留有 <strong>2~3 個備用空迴路</strong>。
+        </div>
+      </div>
+    </section>
+
+    <!-- 現場五問 -->
+    <section>
+      <h2 class="section-title">放樣當天直接照著問・避開 90% 裝修糾紛</h2>
+      <div class="qa-list">
+        <div class="qa-item">
+          <div class="qa-num">01</div>
+          <div class="qa-content">
+            <h4>「這個高度是含地板厚度算進去的嗎？」</h4>
+            <p>磁磚與打底水泥約需 3-5 cm，超耐磨或海島型木地板約 1.5-2 cm。未先扣除地板完成厚度，全屋插座開關高度就會普遍偏低。</p>
+          </div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-num">02</div>
+          <div class="qa-content">
+            <h4>「我的床墊 30 公分、床頭板 12 公分，這樣會被擋到嗎？」</h4>
+            <p>直接報出預選家具真實尺寸，讓水電師傅在牆上現場對比確認。以數據對照勝過憑空想像。</p>
+          </div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-num">03</div>
+          <div class="qa-content">
+            <h4>「櫃體背後這組，之後插頭插得進去嗎？」</h4>
+            <p>大型櫃體背板緊靠牆面會壓死插座。應移至櫃體側板前緣，或規劃櫃內引孔/出線孔穿線。</p>
+          </div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-num">04</div>
+          <div class="qa-content">
+            <h4>「這條是專用迴路還是跟其他插座共用？」</h4>
+            <p>現場逐一確認，並請水電師傅於配電箱蓋板上標註清楚每支無熔絲開關對應空間，日後跳電排查一目了然。</p>
+          </div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-num">05</div>
+          <div class="qa-content">
+            <h4>「開孔位置可以先貼膠帶標記一下，我拍照存檔嗎？」</h4>
+            <p>封板與泥作貼磚前，務必將牆面管線走向、出線盒與附帶捲尺尺寸拍攝完整存證。未來釘掛層板、鑽孔安裝壁畫時，這批照片價值連城！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="cta-card">
+      <h3>免費諮詢・放樣前傳給我們看一眼</h3>
+      <p>把您家的平面配置圖與家具尺寸表傳過來，實建家免費協助標注核對插座點位。牆面尚未封板，一切都還來得及！</p>
+      <a href="https://lin.ee/7gzZd7Z4" target="_blank" rel="noopener noreferrer" class="btn-line">
+        📲 加入 LINE 免費諮詢實建家
+      </a>
+      <div style="margin-top: 14px; font-size: 0.85rem; color: #94a3b8;">
+        官方 LINE：https://lin.ee/7gzZd7Z4
+      </div>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 16px;">
+      <strong style="color: #cbd5e1;">台中裝潢夫妻 ｜ 快手哥</strong><br>
+      實建家室內設計 × 住宅空間規劃
+    </div>
+
+    <p class="legal-notice">
+      免責聲明：本清單為住宅裝修實務經驗整理，尺寸數值均為常見建議區間，實際施作仍需依各戶家具尺寸、屋況現場結構與電器配置靈活調整。所有電氣工程請委由合格電匠或水電專業技師施作，並確實依據《屋內線路裝置規則》相關法規辦理。
+    </p>
+  </footer>
+</div>
+
+</body>
+</html>
